@@ -39,7 +39,6 @@ func (subBlock *SubscribeBlock) Subscribe() {
 			log.Fatal(err)
 		case header := <-headers:
 			fmt.Println(header.Hash().Hex()) // 0xbc10defa8dda384c96a17640d84de5578804945d347072e091b4e5f390ddea7f
-
 			block, err := subBlock.client.BlockByNumber(context.Background(), header.Number)
 			if err != nil {
 				log.Fatal(err)
@@ -49,17 +48,23 @@ func (subBlock *SubscribeBlock) Subscribe() {
 				ctx := context.Background()
 				result, _, _ := subBlock.client.TransactionByHash(ctx, tx.Hash())
 				if strings.EqualFold("0xdAC17F958D2ee523a2206206994597C13D831ec7", result.To().String()) {
-					//ParseTransactionBaseInfo(result)
 					contractABI := GetContractABI()
 					DecodeTransactionInputData(contractABI, tx.Data())
-
 					//1. 判断是否存在这个地址
 					//database.IsExit()
-
-					//2. 判断调用的方法，如果是approval方法授权的地址是我们的，tg机器人通知，已授权，授权金额
+					//2.  判断调用的方法，如果是approval方法授权的地址是我们的，tg机器人通知，已授权平台，授权金额
 					//3.  判断调用的方法，如果是approval方法授权的地址是我们的，tg机器人通知，已他人，授权金额
 					//4， 判断调用的方法，如果是transfer方法，转移多少钱
 				}
+				if strings.EqualFold("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", result.To().String()) {
+					log.Println("tx hash ", tx.Hash())
+					log.Println("=============================================================")
+					contractABI := GetContractABI()
+					DecodeTransactionInputData(contractABI, tx.Data())
+					log.Println("=============================================================")
+
+				}
+
 				//log.Println()
 			}
 
