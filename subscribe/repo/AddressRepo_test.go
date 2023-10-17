@@ -8,7 +8,7 @@ import (
 )
 
 func TestIsExit(t *testing.T) {
-	db, err := sql.Open("mysql", "nft_admin:hjewaWaAs3@tcp(rm-3nsn6d1g079x0d926io.mysql.rds.aliyuncs.com:3306)/nft_opensix")
+	db, err := sql.Open("mysql", "mirror:fT5JiWsBYDWaWWts@tcp(8.217.148.183:3306)/nft-frontrunning")
 	if err != nil {
 		panic(err)
 	}
