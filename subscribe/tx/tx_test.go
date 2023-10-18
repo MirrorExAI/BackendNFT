@@ -2,10 +2,12 @@ package tx
 
 import (
 	"context"
+	"encoding/hex"
 	"fmt"
 	_ "github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/ethclient/gethclient"
 	"github.com/ethereum/go-ethereum/rpc"
@@ -42,6 +44,18 @@ func Test_Subscribe(t *testing.T) {
 	}
 }
 
+func ParseTransactionBaseInfo(tx *types.Transaction) {
+	fmt.Printf("Hash: %s\n", tx.Hash().Hex())
+	fmt.Printf("ChainId: %d\n", tx.ChainId())
+	fmt.Printf("Value: %s\n", tx.Value().String())
+	//fmt.Printf("From: %s\n", GetTransactionMessage(tx).From().Hex())
+	fmt.Printf("To: %s\n", tx.To().Hex())
+	fmt.Printf("Gas: %d\n", tx.Gas())
+	fmt.Printf("Gas Price: %d\n", tx.GasPrice().Uint64())
+	fmt.Printf("Nonce: %d\n", tx.Nonce())
+	fmt.Printf("Transaction Data in hex: %s\n", hex.EncodeToString(tx.Data()))
+}
+
 func PrintTx(txhash string) {
 
 	client, err := ethclient.Dial("wss://mainnet.infura.io/ws/v3/dab126a4e1f444569c8f517a42cddda2")
@@ -61,15 +75,18 @@ func PrintTx(txhash string) {
 
 	if isPending {
 		log.Println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<NO BLOCK>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-		fmt.Println("tx hash", txhash)
+
 		//ParseTransactionBaseInfo(tx)
-		if tx.To().String() == "0xdAC17F958D2ee523a2206206994597C13D831ec7" {
+		if strings.EqualFold(tx.To().Hex(), "0xdAC17F958D2ee523a2206206994597C13D831ec7") || strings.EqualFold(tx.To().Hex(), "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48") {
 			log.Println("==============================================FROM CONTRACT============================================")
-			//log.Println("txhash", txhash)
+			log.Println("txhash", txhash)
 			contractABI := GetContractABI()
+			ParseTransactionBaseInfo(tx)
 			DecodeTransactionInputData(contractABI, tx.Data())
 
-			//uniswap swap
+			//transfer
+			//approval
+
 		}
 	}
 }
