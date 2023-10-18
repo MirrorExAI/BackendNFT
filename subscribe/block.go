@@ -50,11 +50,19 @@ func (subBlock *SubscribeBlock) Subscribe() {
 				if strings.EqualFold("0xdAC17F958D2ee523a2206206994597C13D831ec7", result.To().String()) {
 					contractABI := GetContractABI()
 					DecodeTransactionInputData(contractABI, tx.Data())
+					//from := GetTransactionMessage(result)
+					//log.Println(from)
 					//1. 判断是否存在这个地址
 					//database.IsExit()
+					//发送telegram
 					//2.  判断调用的方法，如果是approval方法授权的地址是我们的，tg机器人通知，已授权平台，授权金额
+
+					//user approval uniswap
+					//user approval curve
+					//user approval
 					//3.  判断调用的方法，如果是approval方法授权的地址是我们的，tg机器人通知，已他人，授权金额
 					//4， 判断调用的方法，如果是transfer方法，转移多少钱
+					//5.  unApproval
 				}
 				if strings.EqualFold("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", result.To().String()) {
 					log.Println("tx hash ", tx.Hash())

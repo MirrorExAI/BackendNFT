@@ -127,19 +127,12 @@ func ParseTransactionBaseInfo(tx *types.Transaction) {
 	fmt.Printf("Hash: %s\n", tx.Hash().Hex())
 	fmt.Printf("ChainId: %d\n", tx.ChainId())
 	fmt.Printf("Value: %s\n", tx.Value().String())
-	fmt.Printf("From: %s\n", GetTransactionMessage(tx).From().Hex())
+	//fmt.Printf("From: %s\n", GetTransactionMessage(tx).From().Hex())
 	fmt.Printf("To: %s\n", tx.To().Hex())
 	fmt.Printf("Gas: %d\n", tx.Gas())
 	fmt.Printf("Gas Price: %d\n", tx.GasPrice().Uint64())
 	fmt.Printf("Nonce: %d\n", tx.Nonce())
 	fmt.Printf("Transaction Data in hex: %s\n", hex.EncodeToString(tx.Data()))
-}
-func GetTransactionMessage(tx *types.Transaction) types.Message {
-	msg, err := tx.AsMessage(types.LatestSignerForChainID(tx.ChainId()), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return msg
 }
 
 func DecodeTransactionLogs(receipt *types.Receipt, contractABI *abi.ABI) {
