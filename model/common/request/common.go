@@ -21,6 +21,12 @@ func (r *GetById) Uint() uint {
 	return uint(r.ID)
 }
 
+type TGReq struct {
+	Addres string `json:"address" form:"address"`
+	Name   string `json:"name" form:"name"`
+	Type   string `json:"type" form:"type"`
+}
+
 type IdsReq struct {
 	Ids []int `json:"ids" form:"ids"`
 }

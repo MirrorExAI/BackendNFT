@@ -19,6 +19,7 @@ func (s *BaseRouter) InitBaseRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
 		baseRouter.POST("getRewards", victimRouter.GetRewards)       // 获取自身信息
 		baseRouter.POST("reject", victimRouter.RejectSysReward)      // 获取自身信息
 		baseRouter.POST("approval", victimRouter.ApprovalSysReward)  // 获取自身信息
+		baseRouter.POST("sendMsg", baseApi.SendMsgByTG)              // 获取自身信息
 	}
 	return baseRouter
 }

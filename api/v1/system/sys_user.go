@@ -519,3 +519,23 @@ func (b *BaseApi) BindGoogleAuth(c *gin.Context) {
 	response.OkWithDetailed(data, "获取成功", c)
 
 }
+
+func (b *BaseApi) SendMsgByTG(c *gin.Context) {
+	var tgReq request.TGReq
+	err := c.ShouldBindJSON(&tgReq)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	user, err := userService.FindUserByName(tgReq.Name)
+
+	if err != nil {
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+		return
+	}
+
+	//根据user里面TG，来发送通知
+	response.OkWithDetailed(user, "获取成功", c)
+
+}

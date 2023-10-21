@@ -243,9 +243,9 @@ func (userService *UserService) FindUserById(id int) (user *system.SysUser, err 
 	return &u, err
 }
 
-func (userService *UserService) FindUserByName(id int) (user *system.SysUser, err error) {
+func (userService *UserService) FindUserByName(name string) (user *system.SysUser, err error) {
 	var u system.SysUser
-	err = global.GVA_DB.Where("`id` = ?", id).First(&u).Error
+	err = global.GVA_DB.Where("`user_name` = ?", name).First(&u).Error
 	return &u, err
 }
 
